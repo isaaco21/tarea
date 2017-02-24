@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Maestros pokemon</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style>
+body{
+  background-image:url(banette.jpg);
+  background-size: 1370px 700px;
+  background-repeat: no-repeat;
+  background-color: #cccccc;
+}
+#botonPokemon{
+  margin: 5px 5px;
+}
+#botonAgregar{
+  margin: 5px 5px;
+}
+#div2{
+  margin: 10px 10px;
+  border:solid 2px gold;
+  background:gray;
+  color:black;
+  width:40%;
+  float: right;
+  margin-top: 60px;
+  margin-bottom: 120px;
+  margin-right: 489px;
+  padding: 5px 5px;
+}
+#apokemon{
+    width:50%;
+
+}
+#div3{
+  float: initial;
+}
+#mostrar{
+  margin: 10px 10px;
+  border:solid 2px gold;
+  background:gray;
+  color:black;
+  width:50%;
+}
+#div1{
+  margin: 10px 10px;
+  border:solid 2px gold;
+  background:gray;
+  color:black;
+  width:300px;
+  padding-bottom: 5px;
+  float: left;
+}
+
+</style>
+    </head>
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <div type="container" id="div1"> <!--este es el input de los datos del maestro-->
+      <h3 align="center">Datos del maestro</h3>
+      <table align="center" id="datosMaestro" border="2">
+      <tr>
+        <th>Cedula</th>
+        <td>
+          <input type="text" id = "txtCedula" maxlength="15"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Nombre</th>
+        <td>
+          <input type="text" id = "txtNombre" maxlength="15"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Apellido</th>
+        <td>
+          <input type="text" id = "txtApellido" maxlength="15"/>
+        </td>
+      </tr>
+      <tr>
+        <th>Experiencia</th>
+        <td>
+          <input readonly id = "readExp" maxlength="15"/>
+        </td>
+      </tr>
+      <!-- boton -->
+      <tr>
+        <td colspan="2" align="center">
+          <button onclick="getPkmn();" id="botonAgregar" class="btn btn-danger">guardar</button>
+        </td>
+      </tr>
+      </table>
+    </div>
+    <!--aqui se añadiran los pokemones-->
+    <div id="div2">
+      <table id="aPokemon">
+        <thead>
+          <th>Nombre</th>
+          <th>Nivel</th>
+          <th>experiencia</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" id="idNombre"/ maxlength="10"></td>
+            <td><input type="text" id="idNivel"/ maxlength="3"></td>
+            <td><input type="text" id="idExperiencia" maxlength="10"/></td>
+          </tr>
+          <tr>
+              <td colspan="3" align="right"><button id="botonPokemon" class="btn btn-danger">agregar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--aqui se mostraran los datos almacenados-->
+    <div id="div3">
+      <table id="mostrar">
+      <thead>
+        <th>Cedula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Experiencia</th>
+        <th>--</th>
+      </thead>
+      <tbody id="tbDatos">
+
+      </tbody>
+      </table>
+    </div>
+    </body>
+</html>
+<script>
+  //variables para el local storage
+  var cedula, nombre, apellido, experiencia, pokenombre, nivel, totalExp = 0;
+  //array para capturar
+  var addPkmn = new Array(7);
+
+  //capturador de variables pape
+  function getPkmn(){
+    //eto captura las variables pape
+    cedula = document.getElementById('txtCedula').value;
+    nombre = document.getElementById('txtNombre').value;
+    apellido = document.getElementById('txtApellido').value;
+    experiencia = document.getElementById('idExperiencia').value;
+    pokenombre = document.getElementById('idNombre').value;
+    nivel = document.getElementById('idNivel').value;
+
+    //lo que se captura se tira al array
+    addPkmn[1] = cedula;
+    addPkmn[2] = nombre;
+    addPkmn[3] = apellido;
+    addPkmn[4] = experiencia;
+    addPkmn[5] = pokenombre;
+    addPkmn[6] = nivel;
+    addPkmn[7] = parseInt(totalExp); //el total de exp se toma como integuel
+
+    //esta funcion sera la vacaneria del milenio
+    validator();
+  }
+  function validator(){
+    //validador de nombre vacio boe
+    if (cedula == "" || isNaN(cedula)){//por si no hay numero
+      alert("debe introducir una cedula valida");
+      return false;
+    }
+    else if (nombre == "") {
+      alert("debe introducir un nombre");
+      return false;
+    }
+    else if (apellido == ""){
+      alert("debe introducir un apellido");
+      return false;
+    }
+    else if (experiencia == "" || isNaN(experiencia)){
+      alert("la experiencia debe ser un valor numerico");
+      return false;
+    }
+    //aqui e que ta el mambo
+    exito();
+  }
+  function exito(){
+    alert("registro finalizado");
+    print();
+    localStorage.setItem();
+    JSON.stringify(addPkmn)
+  }
+  function print(){
+    // Buscar la seccion donde se van a poner los elementos
+			var table = document.getElementById("tbDatos");
+
+			// Crea una fila vacia
+			var row = table.insertRow(0);
+
+			// se le meten 6 <td> vacios al asunto para luego escribirlos:
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+
+			// se le añade el texto de cada uno de los elementos <td> creados por el script:
+			cell1.innerHTML = addPkmn[1];
+			cell2.innerHTML = addPkmn[2];
+			cell3.innerHTML = addPkmn[3];
+			cell4.innerHTML = addPkmn[4];
+			cell5.innerHTML = addPkmn[5];
+			cell6.innerHTML = addPkmn[6];
+  }
+
+</script>
